@@ -1,4 +1,8 @@
 services:
+  omikuji:
+    build: ./omikuji
+    ports:
+      - "8080:8080"
   ui:
     build: ./ui
     ports:
@@ -7,8 +11,3 @@ services:
       - OMIKUJI_BACKEND=http://omikuji:8080/omikuji
     depends_on:
       - omikuji
-
-  omikuji:
-    build: ./omikuji
-    ports:
-      - "8080:8080"
