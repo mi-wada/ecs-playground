@@ -20,6 +20,11 @@ const port = 8081
 //go:embed index.html
 var templatesFS embed.FS
 
+func healthHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("OK"))
+}
+
 func main() {
 	// Simplified configuration: read backend from env or use default.
 	backend := os.Getenv("OMIKUJI_BACKEND")
@@ -29,6 +34,7 @@ func main() {
 
 	tmpl := template.Must(template.ParseFS(templatesFS, "index.html"))
 
+	http.HandleFunc("/health", healthHandler)
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
 
