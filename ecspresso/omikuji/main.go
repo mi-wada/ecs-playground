@@ -33,8 +33,14 @@ func omikujiHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(b)
 }
 
+func healthHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("OK"))
+}
+
 func main() {
 	http.HandleFunc("/omikuji", omikujiHandler)
+	http.HandleFunc("/health", healthHandler)
 	log.Printf("starting server on :%d", port)
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", port), nil))
 }
