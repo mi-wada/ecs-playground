@@ -13,7 +13,7 @@ import (
 	"time"
 )
 
-const port = 8081
+const port = 80
 
 // Embed the single template at the package root as requested (index.html)
 //
@@ -26,7 +26,6 @@ func healthHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	// Simplified configuration: read backend from env or use default.
 	backend := os.Getenv("OMIKUJI_BACKEND")
 	if backend == "" {
 		backend = "http://localhost:8080/omikuji"
