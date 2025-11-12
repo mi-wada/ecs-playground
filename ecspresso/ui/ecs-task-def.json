@@ -1,0 +1,58 @@
+{
+  "containerDefinitions": [
+    {
+      "cpu": 0,
+      "environment": [
+        {
+          "name": "OMIKUJI_BACKEND",
+          "value": "http://omikuji/omikuji"
+        }
+      ],
+      "essential": true,
+      "healthCheck": {
+        "command": [
+          "CMD-SHELL",
+          "curl -f http://localhost/health || exit 1"
+        ],
+        "interval": 30,
+        "retries": 3,
+        "timeout": 5
+      },
+      "image": "091512051921.dkr.ecr.ap-northeast-1.amazonaws.com/ecsp/ui@sha256:595c153af3995f16edcd0c2bd5f153fa9b02bf42752a7b81671c8320537b0e05",
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-create-group": "true",
+          "awslogs-group": "/ecs/ecsp-ui",
+          "awslogs-region": "ap-northeast-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "name": "ui",
+      "portMappings": [
+        {
+          "appProtocol": "http",
+          "containerPort": 80,
+          "hostPort": 80,
+          "name": "ui-80-tcp",
+          "protocol": "tcp"
+        }
+      ],
+      "versionConsistency": ""
+    }
+  ],
+  "cpu": "1024",
+  "executionRoleArn": "arn:aws:iam::091512051921:role/ecsTaskExecutionRole",
+  "family": "ecsp-ui",
+  "ipcMode": "",
+  "memory": "2048",
+  "networkMode": "awsvpc",
+  "pidMode": "",
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "runtimePlatform": {
+    "cpuArchitecture": "ARM64",
+    "operatingSystemFamily": "LINUX"
+  }
+}
