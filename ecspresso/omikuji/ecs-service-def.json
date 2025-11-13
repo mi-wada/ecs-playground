@@ -20,9 +20,9 @@
   "deploymentController": {
     "type": "ECS"
   },
-  "desiredCount": 0,
+  "desiredCount": 1,
   "enableECSManagedTags": true,
-  "enableExecuteCommand": false,
+  "enableExecuteCommand": true,
   "healthCheckGracePeriodSeconds": 10,
   "launchType": "",
   "networkConfiguration": {

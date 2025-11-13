@@ -18,7 +18,7 @@
         "retries": 3,
         "timeout": 5
       },
-      "image": "091512051921.dkr.ecr.ap-northeast-1.amazonaws.com/ecsp/ui@sha256:595c153af3995f16edcd0c2bd5f153fa9b02bf42752a7b81671c8320537b0e05",
+      "image": "091512051921.dkr.ecr.ap-northeast-1.amazonaws.com/ecsp/ui@sha256:7a2a28140a8326d2393debb45bdd35ea2be0463ecafc078da20d8457244bac72",
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
@@ -42,6 +42,7 @@
     }
   ],
   "cpu": "1024",
+  "taskRoleArn": "arn:aws:iam::091512051921:role/ecsTaskRole",
   "executionRoleArn": "arn:aws:iam::091512051921:role/ecsTaskExecutionRole",
   "family": "ecsp-ui",
   "ipcMode": "",
