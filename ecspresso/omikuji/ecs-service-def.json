@@ -13,16 +13,14 @@
       "enable": true,
       "rollback": true
     },
-    "maximumPercent": 200,
-    "minimumHealthyPercent": 100,
-    "strategy": "ROLLING"
+    "strategy": "BLUE_GREEN"
   },
   "deploymentController": {
     "type": "ECS"
   },
   "desiredCount": 1,
   "enableECSManagedTags": true,
-  "enableExecuteCommand": true,
+  "enableExecuteCommand": false,
   "healthCheckGracePeriodSeconds": 10,
   "launchType": "",
   "networkConfiguration": {
