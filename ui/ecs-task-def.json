@@ -2,6 +2,12 @@
   "containerDefinitions": [
     {
       "cpu": 0,
+      "environment": [
+        {
+          "name": "OMIKUJI_BACKEND",
+          "value": "http://omikuji/omikuji"
+        }
+      ],
       "essential": true,
       "healthCheck": {
         "command": [
@@ -12,23 +18,23 @@
         "retries": 3,
         "timeout": 5
       },
-      "image": "091512051921.dkr.ecr.ap-northeast-1.amazonaws.com/ecsp/omikuji@sha256:3ec427eebe18458aa910e53970a3ddd001716de0937f09124a3f7ba39cdc94a8",
+      "image": "091512051921.dkr.ecr.ap-northeast-1.amazonaws.com/ecsp/ui@sha256:7a2a28140a8326d2393debb45bdd35ea2be0463ecafc078da20d8457244bac72",
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
           "awslogs-create-group": "true",
-          "awslogs-group": "/ecs/ecsp-omikuji",
+          "awslogs-group": "{{ tfstate `aws_cloudwatch_log_group.main['ecsp-ui'].name` }}",
           "awslogs-region": "ap-northeast-1",
           "awslogs-stream-prefix": "ecs"
         }
       },
-      "name": "omikuji",
+      "name": "ui",
       "portMappings": [
         {
           "appProtocol": "http",
           "containerPort": 80,
           "hostPort": 80,
-          "name": "omikuji-80-tcp",
+          "name": "ui-80-tcp",
           "protocol": "tcp"
         }
       ],
@@ -36,8 +42,9 @@
     }
   ],
   "cpu": "1024",
-  "executionRoleArn": "arn:aws:iam::091512051921:role/ecsTaskExecutionRole",
-  "family": "ecsp-omikuji",
+  "taskRoleArn": "{{ tfstate `aws_iam_role.ecs_task.arn` }}",
+  "executionRoleArn": "{{ tfstate `aws_iam_role.ecs_task_execution.arn` }}",
+  "family": "ecsp-ui",
   "ipcMode": "",
   "memory": "2048",
   "networkMode": "awsvpc",

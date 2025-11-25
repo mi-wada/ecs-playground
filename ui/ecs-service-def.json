@@ -20,20 +20,27 @@
   "deploymentController": {
     "type": "ECS"
   },
-  "desiredCount": 0,
+  "desiredCount": 1,
   "enableECSManagedTags": true,
   "enableExecuteCommand": true,
   "healthCheckGracePeriodSeconds": 0,
-  "launchType": "",
+  "launchType": "FARGATE",
+  "loadBalancers": [
+    {
+      "containerName": "ui",
+      "containerPort": 80,
+      "targetGroupArn": "{{ tfstate `aws_lb_target_group.ui.arn` }}"
+    }
+  ],
   "networkConfiguration": {
     "awsvpcConfiguration": {
       "assignPublicIp": "ENABLED",
       "securityGroups": [
-        "sg-0f85750516d3c5e01"
+        "{{ tfstate `aws_security_group.private.id` }}"
       ],
       "subnets": [
-        "subnet-0f0993dad47891679",
-        "subnet-0c1a1ea95c60a7b35"
+        "{{ tfstate `aws_subnet.private['ap-northeast-1a'].id` }}",
+        "{{ tfstate `aws_subnet.private['ap-northeast-1c'].id` }}"
       ]
     }
   },

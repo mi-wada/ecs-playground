@@ -18,7 +18,7 @@
   "deploymentController": {
     "type": "ECS"
   },
-  "desiredCount": 0,
+  "desiredCount": 1,
   "enableECSManagedTags": true,
   "enableExecuteCommand": false,
   "healthCheckGracePeriodSeconds": 10,
@@ -27,11 +27,11 @@
     "awsvpcConfiguration": {
       "assignPublicIp": "DISABLED",
       "securityGroups": [
-        "sg-0b390c276aeaac81e"
+        "{{ tfstate `aws_security_group.private.id` }}"
       ],
       "subnets": [
-        "subnet-0aed015f85b762c00",
-        "subnet-0fe21f9e3f3f3dffc"
+        "{{ tfstate `aws_subnet.private['ap-northeast-1a'].id` }}",
+        "{{ tfstate `aws_subnet.private['ap-northeast-1c'].id` }}"
       ]
     }
   },
