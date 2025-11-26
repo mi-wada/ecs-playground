@@ -21,4 +21,9 @@ jobs:
           role-to-assume: arn:aws:iam::091512051921:role/GitHubActionsRole
           aws-region: ap-northeast-1
       - name: List buckets
-        run: aws s3 ls
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr comment ${{ github.event.pull_request.number }} \
+            --repo ${{ github.repository }} \
+            --body "$(aws s3 ls)"
