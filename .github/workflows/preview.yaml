@@ -53,25 +53,11 @@ jobs:
             echo "EOF"
           } >> $GITHUB_OUTPUT
 
-      - name: List buckets
-        id: buckets
-        run: |
-          {
-            echo "buckets<<EOF"
-            aws s3 ls
-            echo "EOF"
-          } >> $GITHUB_OUTPUT
       - name: Comment on a PR
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cat > /tmp/comment.md << 'EOF'
-          ## S3 Buckets
-
-          ```
-          ${{ steps.buckets.outputs.buckets }}
-          ```
-
           ## Terraform plan
 
           ```
