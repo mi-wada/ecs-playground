@@ -27,6 +27,7 @@ jobs:
           version: v2.6.4
       - id: ecspresso-diff-ui
         run: |
+          cd ./ui
           {
             echo "diff<<EOF"
             ecspresso diff
