@@ -9,7 +9,7 @@ resource "aws_ecr_repository" "ui" {
 
 # __generated__ by Terraform from "ecsp/omikuji"
 resource "aws_ecr_repository" "omikuji" {
-  image_tag_mutability = "MUTABLE"
+  image_tag_mutability = "IMMUTABLE"
   name                 = "ecsp/omikuji"
   region               = "ap-northeast-1"
   encryption_configuration {
