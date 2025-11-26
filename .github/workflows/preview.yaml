@@ -27,4 +27,8 @@ jobs:
         run: |
           gh pr comment ${{ github.event.pull_request.number }} \
             --repo ${{ github.repository }} \
-            --body "$(aws s3 ls)"
+            --body "
+            ## List of S3 Buckets
+
+            $(aws s3 ls)"
+            "
