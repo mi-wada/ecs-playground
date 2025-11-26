@@ -10,6 +10,7 @@ concurrency:
 permissions:
   id-token: write
   contents: read
+  pull-requests: write
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -20,5 +21,62 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::091512051921:role/GitHubActionsRole
           aws-region: ap-northeast-1
-      - name: List buckets
-        run: aws s3 ls
+
+      - uses: hashicorp/setup-terraform@v3
+      - id: plan
+        run: |
+          cd ./terraform
+          terraform init
+          {
+            echo "plan<<EOF"
+            terraform plan -no-color
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
+
+      - uses: kayac/ecspresso@v2
+        with:
+          version: v2.6.4
+      - id: ecspresso-diff-ui
+        run: |
+          cd ./ui
+          {
+            echo "diff<<EOF"
+            ecspresso diff
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
+      - id: ecspresso-diff-omikuji
+        run: |
+          cd ./omikuji
+          {
+            echo "diff<<EOF"
+            ecspresso diff
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
+
+      - name: Comment on a PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cat > /tmp/comment.md << 'EOF'
+          ## Terraform plan
+
+          ```
+          ${{ steps.plan.outputs.plan }}
+          ```
+
+          ## ui / ecspresso diff
+
+          ```
+          ${{ steps.ecspresso-diff-ui.outputs.diff }}
+          ```
+
+          ## omikuji / ecspresso diff
+
+          ```
+          ${{ steps.ecspresso-diff-omikuji.outputs.diff }}
+          ```
+          EOF
+
+          gh pr comment ${{ github.event.pull_request.number }} \
+            --repo ${{ github.repository }} \
+            --body-file /tmp/comment.md
