@@ -29,7 +29,7 @@ jobs:
           terraform init
           {
             echo "plan<<EOF"
-            terraform plan
+            terraform plan -no-color
             echo "EOF"
           } >> $GITHUB_OUTPUT
 
