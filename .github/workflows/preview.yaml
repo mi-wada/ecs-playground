@@ -68,27 +68,27 @@ jobs:
           cat > /tmp/comment.md << 'EOF'
             ## S3 Buckets
 
-            \`\`\`
+            ```
             ${{ steps.buckets.outputs.buckets }}
-            \`\`\`
+            ```
 
             ## Terraform plan
 
-            \`\`\`
+            ```
             ${{ steps.plan.outputs.plan }}
             ```
 
             ## ui / ecspresso diff
 
-            \`\`\`
+            ```
             ${{ steps.ecspresso-diff-ui.outputs.diff }}
-            \`\`\`
+            ```
 
             ## omikuji / ecspresso diff
 
-            \`\`\`
+            ```
             ${{ steps.ecspresso-diff-omikuji.outputs.diff }}
-            \`\`\`
+            ```
             EOF
           )"
           gh pr comment ${{ github.event.pull_request.number }} \
