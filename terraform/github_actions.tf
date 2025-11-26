@@ -34,11 +34,12 @@ resource "aws_iam_role" "github_actions" {
   })
 }
 
-data "aws_iam_policy" "power_user_access" {
-  name = "PowerUserAccess"
+data "aws_iam_policy" "administrator_access" {
+  # TODO: change later
+  name = "AdministratorAccess"
 }
 
 resource "aws_iam_role_policy_attachment" "github_actions" {
   role       = aws_iam_role.github_actions.name
-  policy_arn = data.aws_iam_policy.power_user_access.arn
+  policy_arn = data.aws_iam_policy.administrator_access.arn
 }
