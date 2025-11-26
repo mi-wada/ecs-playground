@@ -29,6 +29,7 @@ jobs:
             --repo ${{ github.repository }} \
             --body "
             ## List of S3 Buckets
-
+            \`\`\`
             $(aws s3 ls)
+            \`\`\`
             "
