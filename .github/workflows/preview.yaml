@@ -93,4 +93,4 @@ jobs:
 
           gh pr comment ${{ github.event.pull_request.number }} \
             --repo ${{ github.repository }} \
-            --body /tmp/comment.md
+            --body-file /tmp/comment.md
