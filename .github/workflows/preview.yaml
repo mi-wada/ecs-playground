@@ -22,6 +22,14 @@ jobs:
           role-to-assume: arn:aws:iam::091512051921:role/GitHubActionsRole
           aws-region: ap-northeast-1
       - name: List buckets
+        id: buckets
+        run: |
+          {
+            echo "buckets<<EOF"
+            aws s3 ls
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
+      - name: List buckets
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -30,6 +38,6 @@ jobs:
             --body "
             ## List of S3 Buckets
             \`\`\`
-            $(aws s3 ls)
+            ${{ steps.buckets.outputs.buckets }}
             \`\`\`
             "
