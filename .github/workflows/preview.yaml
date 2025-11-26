@@ -16,13 +16,13 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v6
-      - uses: aws-actions/configure-aws-credentials@v5
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+      - uses: aws-actions/configure-aws-credentials@61815dcd50bd041e203e49132bacad1fd04d2708 # v5.1.1
         with:
           role-to-assume: arn:aws:iam::091512051921:role/GitHubActionsRole
           aws-region: ap-northeast-1
 
-      - uses: hashicorp/setup-terraform@v3
+      - uses: hashicorp/setup-terraform@b9cd54a3c349d3f38e8881555d616ced269862dd # v3.1.2
       - id: plan
         run: |
           cd ./terraform
@@ -33,7 +33,7 @@ jobs:
             echo "EOF"
           } >> $GITHUB_OUTPUT
 
-      - uses: kayac/ecspresso@v2
+      - uses: kayac/ecspresso@2c38c148ea49af35672cb0e8420d443006dd4a40 # v2.6.4
         with:
           version: v2.6.4
       - id: ecspresso-diff-ui
