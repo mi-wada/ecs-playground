@@ -7,11 +7,14 @@ resource "aws_ecs_cluster" "main" {
     }
   }
   service_connect_defaults {
-    # TODO: この aws_service_discovery_private_dns_namespace をimportする
     namespace = "arn:aws:servicediscovery:ap-northeast-1:091512051921:namespace/ns-zk76jgg6umbfy3x4"
   }
   setting {
     name  = "containerInsights"
     value = "enhanced"
   }
+}
+
+resource "aws_service_discovery_http_namespace" "main" {
+  name = "ecsp"
 }

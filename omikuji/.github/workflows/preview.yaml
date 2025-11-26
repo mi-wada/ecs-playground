@@ -1,0 +1,21 @@
+name: Preview Changes
+on:
+  pull_request:
+defaults:
+  run:
+    shell: bash
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+      - uses: aws-actions/configure-aws-credentials@v5
+        with:
+          role-to-assume: arn:aws:iam::091512051921:role/GitHubActionsRole
+          aws-region: ap-northeast-1
+      - name: List buckets
+        run: aws s3 ls
