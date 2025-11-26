@@ -90,7 +90,7 @@ jobs:
           ${{ steps.ecspresso-diff-omikuji.outputs.diff }}
           ```
           EOF
-          )"
+
           gh pr comment ${{ github.event.pull_request.number }} \
             --repo ${{ github.repository }} \
             --body /tmp/comment.md
