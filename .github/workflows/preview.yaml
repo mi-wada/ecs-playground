@@ -67,7 +67,7 @@ jobs:
         run: |
           gh pr comment ${{ github.event.pull_request.number }} \
             --repo ${{ github.repository }} \
-            --body "
+            --body "$(cat << 'EOF'
             ## S3 Buckets
             \`\`\`
             ${{ steps.buckets.outputs.buckets }}
@@ -87,4 +87,5 @@ jobs:
             \`\`\`
             ${{ steps.ecspresso-diff-omikuji.outputs.diff }}
             \`\`\`
-            "
+            EOF
+            )"
