@@ -33,7 +33,8 @@ jobs:
       omikuji: ${{ steps.filter.outputs.omikuji }}
       ui: ${{ steps.filter.outputs.ui }}
   terraform:
-    needs: changes
+    needs:
+      - changes
     if: ${{ needs.changes.outputs.terraform == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
