@@ -1,0 +1,88 @@
+name: Deploy
+on:
+  push:
+    branches:
+      - 'main'
+defaults:
+  run:
+    shell: bash
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+permissions:
+  id-token: write
+  contents: read
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+      - uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
+        id: filter
+        with:
+          filters: |
+            terraform:
+              - 'terraform/**'
+            omikuji:
+              - 'omikuji/**'
+            ui:
+              - 'ui/**'
+    outputs:
+      terraform: ${{ steps.filter.outputs.terraform }}
+      omikuji: ${{ steps.filter.outputs.omikuji }}
+      ui: ${{ steps.filter.outputs.ui }}
+  terraform:
+    needs:
+      - changes
+    if: ${{ needs.changes.outputs.terraform == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+      - uses: aws-actions/configure-aws-credentials@61815dcd50bd041e203e49132bacad1fd04d2708 # v5.1.1
+        with:
+          role-to-assume: arn:aws:iam::091512051921:role/GitHubActionsRole
+          aws-region: ap-northeast-1
+
+      - uses: hashicorp/setup-terraform@b9cd54a3c349d3f38e8881555d616ced269862dd # v3.1.2
+      - run: |
+          cd ./terraform
+          terraform init
+          terraform apply -no-color -auto-approve
+  omikuji:
+    needs:
+      - changes
+    if: ${{ needs.changes.outputs.omikuji == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+      - uses: aws-actions/configure-aws-credentials@61815dcd50bd041e203e49132bacad1fd04d2708 # v5.1.1
+        with:
+          role-to-assume: arn:aws:iam::091512051921:role/GitHubActionsRole
+          aws-region: ap-northeast-1
+      - uses: kayac/ecspresso@2c38c148ea49af35672cb0e8420d443006dd4a40 # v2.6.4
+        with:
+          version: v2.6.4
+      - run: |
+          cd ./omikuji
+          ecspresso deploy --no-color
+  ui:
+    needs:
+      - changes
+    if: ${{ needs.changes.outputs.ui == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+      - uses: aws-actions/configure-aws-credentials@61815dcd50bd041e203e49132bacad1fd04d2708 # v5.1.1
+        with:
+          role-to-assume: arn:aws:iam::091512051921:role/GitHubActionsRole
+          aws-region: ap-northeast-1
+      - uses: kayac/ecspresso@2c38c148ea49af35672cb0e8420d443006dd4a40 # v2.6.4
+        with:
+          version: v2.6.4
+      - run: |
+          cd ./ui
+          ecspresso deploy --no-color
