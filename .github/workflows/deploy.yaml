@@ -51,7 +51,6 @@ jobs:
           terraform apply -no-color -auto-approve
   omikuji:
     needs:
-      - terraform
       - changes
     if: ${{ needs.changes.outputs.omikuji == 'true' }}
     runs-on: ubuntu-latest
@@ -70,7 +69,6 @@ jobs:
           ecspresso deploy --no-color
   ui:
     needs:
-      - terraform
       - changes
     if: ${{ needs.changes.outputs.ui == 'true' }}
     runs-on: ubuntu-latest
