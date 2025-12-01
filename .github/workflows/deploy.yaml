@@ -62,7 +62,7 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::091512051921:role/GitHubActionsRole
           aws-region: ap-northeast-1
-      - uses: kayac/ecspresso@2c38c148ea49af35672cb0e8420d443006dd4a40 # v2.6.4
+      - uses: kayac/ecspresso@bccb1f3db40d2b03877d0d2e85a8b6c0d1543f95 # v2.6.5
         with:
           version: v2.6.4
       - run: |
@@ -80,7 +80,7 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::091512051921:role/GitHubActionsRole
           aws-region: ap-northeast-1
-      - uses: kayac/ecspresso@2c38c148ea49af35672cb0e8420d443006dd4a40 # v2.6.4
+      - uses: kayac/ecspresso@bccb1f3db40d2b03877d0d2e85a8b6c0d1543f95 # v2.6.5
         with:
           version: v2.6.4
       - run: |
