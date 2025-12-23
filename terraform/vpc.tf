@@ -109,44 +109,44 @@ resource "aws_vpc_security_group_ingress_rule" "interface_vpc_endpoint_allow_pri
   to_port           = 443
 }
 
-resource "aws_vpc_endpoint" "ecr_dkr" {
-  vpc_id            = aws_vpc.main.id
-  service_name      = "com.amazonaws.ap-northeast-1.ecr.dkr"
-  vpc_endpoint_type = "Interface"
-  security_group_ids = [
-    aws_security_group.interface_vpc_endpoint.id
-  ]
-  subnet_ids = [for s in aws_subnet.private : s.id]
-  tags = {
-    Name = "ecr_dkr"
-  }
-}
+# resource "aws_vpc_endpoint" "ecr_dkr" {
+#   vpc_id            = aws_vpc.main.id
+#   service_name      = "com.amazonaws.ap-northeast-1.ecr.dkr"
+#   vpc_endpoint_type = "Interface"
+#   security_group_ids = [
+#     aws_security_group.interface_vpc_endpoint.id
+#   ]
+#   subnet_ids = [for s in aws_subnet.private : s.id]
+#   tags = {
+#     Name = "ecr_dkr"
+#   }
+# }
 
-resource "aws_vpc_endpoint" "ecr_api" {
-  vpc_id            = aws_vpc.main.id
-  service_name      = "com.amazonaws.ap-northeast-1.ecr.api"
-  vpc_endpoint_type = "Interface"
-  security_group_ids = [
-    aws_security_group.interface_vpc_endpoint.id
-  ]
-  subnet_ids = [for s in aws_subnet.private : s.id]
-  tags = {
-    Name = "ecr_api"
-  }
-}
+# resource "aws_vpc_endpoint" "ecr_api" {
+#   vpc_id            = aws_vpc.main.id
+#   service_name      = "com.amazonaws.ap-northeast-1.ecr.api"
+#   vpc_endpoint_type = "Interface"
+#   security_group_ids = [
+#     aws_security_group.interface_vpc_endpoint.id
+#   ]
+#   subnet_ids = [for s in aws_subnet.private : s.id]
+#   tags = {
+#     Name = "ecr_api"
+#   }
+# }
 
-resource "aws_vpc_endpoint" "logs" {
-  vpc_id            = aws_vpc.main.id
-  service_name      = "com.amazonaws.ap-northeast-1.logs"
-  vpc_endpoint_type = "Interface"
-  security_group_ids = [
-    aws_security_group.interface_vpc_endpoint.id
-  ]
-  subnet_ids = [for s in aws_subnet.private : s.id]
-  tags = {
-    Name = "logs"
-  }
-}
+# resource "aws_vpc_endpoint" "logs" {
+#   vpc_id            = aws_vpc.main.id
+#   service_name      = "com.amazonaws.ap-northeast-1.logs"
+#   vpc_endpoint_type = "Interface"
+#   security_group_ids = [
+#     aws_security_group.interface_vpc_endpoint.id
+#   ]
+#   subnet_ids = [for s in aws_subnet.private : s.id]
+#   tags = {
+#     Name = "logs"
+#   }
+# }
 
 resource "aws_route_table_association" "private" {
   for_each = local.private_subnets
