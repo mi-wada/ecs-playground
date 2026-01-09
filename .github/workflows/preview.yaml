@@ -33,7 +33,7 @@ jobs:
             echo "EOF"
           } >> $GITHUB_OUTPUT
 
-      - uses: kayac/ecspresso@2c38c148ea49af35672cb0e8420d443006dd4a40 # v2.6.4
+      - uses: kayac/ecspresso@44f7211aa6ac08afc89e7c3dc54790287b4f262e # v2.7.0
         with:
           version: v2.6.4
       - id: ecspresso-diff-ui
